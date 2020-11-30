@@ -1,0 +1,31 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package laskin;
+
+/**
+ *
+ * @author tulijoki
+ */
+public class Plus extends Komento {
+
+    protected Sovelluslogiikka s;
+    protected IO io;
+    protected Tapahtumankuuntelija t;
+
+    public Plus(IO io, Sovelluslogiikka s, Tapahtumankuuntelija t) {
+        this.io = io;
+        this.s = s;
+        this.t = t;
+    }
+        
+    @Override
+    public void suorita() {
+        int syote = io.haeSyote();
+        s.plus(syote);
+        t.getKomennot().put(t.getUndo(), new Undo(new Miinus(io, s, t), syote, s, io));
+        io.tulosta(String.valueOf(s.tulos()));
+    }
+}
